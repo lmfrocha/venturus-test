@@ -1,0 +1,10 @@
+insert into cliente(id, nome, cnpj) values(1,'Venturus', '01333902000102');
+insert into cliente(id, nome, cnpj) values(2,'IBM','81802461000180');
+insert into cliente(id, nome, cnpj) values(3,'Microsoft','80067894000176');
+insert into cliente(id, nome, cnpj) values(4,'Americanas','30630675000185');
+insert into cliente(id, nome, cnpj) values(5,'Magazine Luiza','64300652000124');
+insert into cliente(id, nome, cnpj) values(6,'Globo','42534618000181'); 
+insert into cliente(id, nome, cnpj) values(7,'SBT','94823747000193');
+insert into cliente(id, nome, cnpj) values(8,'BAND','12584023000170');
+insert into cliente(id, nome, cnpj) values(9,'BAND Minas','12584023000170');
+insert into cliente(id, nome, cnpj) values(10,'BAND São Paulo','12584023000170');

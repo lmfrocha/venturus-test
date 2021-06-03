@@ -1,0 +1,13 @@
+insert into servico (id, descricao) values (1,'Manutenção de Software');
+insert into servico (id, descricao) values (2,'Migração de código entre plataformas e linguagens');
+insert into servico (id, descricao) values (3,'Software para depurar bases de dados ou migrar dados entre aplicações');
+insert into servico (id, descricao) values (4,'Localização de software e de páginas web');
+insert into servico (id, descricao) values (5,'Software para gerar cadastro e relatórios');
+insert into servico (id, descricao) values (6,'Revisão de IGU e manuais de usuário');
+insert into servico (id, descricao) values (7,'Análise de dados para projetos big data');
+insert into servico (id, descricao) values (8,'Monitoramento de servidores, aplicativos, base de dados, redes e outros sistemas');
+insert into servico (id, descricao) values (9,'Gestão e controle de acesso e de usuário, e outros de segurança da informação');
+insert into servico (id, descricao) values (10,'Gestão de conteúdo web e portais da Internet');
+insert into servico (id, descricao) values (11,'Conversões, migrações, revisões, limpezas e fusões de base de dados');
+insert into servico (id, descricao) values (12,'Automatização de testes de software');
+insert into servico (id, descricao) values (13,'Desenvolvimento de Sistemas complexos');
