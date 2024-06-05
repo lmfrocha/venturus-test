@@ -39,7 +39,7 @@ public class ContratoResource {
 	
 	@GetMapping("/id/{id}")
 	private ResponseEntity<?> getById(@PathVariable Long id){
-		ContratoDTO contratoDTO = contratoService.findBy(id);
+		var contratoDTO = contratoService.findBy(id);
 		return Objects.nonNull(contratoDTO) ? ResponseEntity.status(HttpStatus.OK).body(contratoDTO) : ResponseEntity.notFound().build();
 	}
 	
@@ -52,7 +52,7 @@ public class ContratoResource {
 	@PutMapping("/id/{id}")
 	private ResponseEntity<?> update(@PathVariable Long id, @RequestBody ContratoDTO contratoDTO) {
 		try {
-			ContratoDTO oldProduct = contratoService.update(id, contratoDTO);
+			var oldProduct = contratoService.update(id, contratoDTO);
 			return ResponseEntity.ok(oldProduct);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
@@ -61,7 +61,7 @@ public class ContratoResource {
 	
 	@GetMapping
 	private ResponseEntity<?> getAll(@RequestParam("cnpj") String cnpj,Pageable pageable){
-		ContratoListDTO response = contratoService.findAll(cnpj, pageable);
+		var response = contratoService.findAll(cnpj, pageable);
 		return response.getContratos().getSize() > 0 ? ResponseEntity.ok(response) : ResponseEntity.noContent().build();
 	}
 	

@@ -25,44 +25,45 @@ import br.com.venturus.api.service.ClienteService;
 @RequestMapping("/api/v1/cliente")
 public class ClienteResource {
 
-	@Autowired
-	private ClienteService clienteService;
-	
-	@Autowired
-	private ClienteRepository clienteRepository;
-	
-	@PostMapping
-	private ResponseEntity<?> save(@RequestBody ClienteDTO clienteDTO){
-		clienteService.save(clienteDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(clienteDTO);
-	}
-	
-	@GetMapping("/id/{id}")
-	private ResponseEntity<?> getById(@PathVariable Long id){
-		ClienteDTO clienteDTO = clienteService.findBy(id);
-		return Objects.nonNull(clienteDTO) ? ResponseEntity.status(HttpStatus.OK).body(clienteDTO) : ResponseEntity.notFound().build();
-	}
-	
-	@DeleteMapping("/id/{id}")
-	private ResponseEntity<?> deleteById(@PathVariable Long id){
-		clienteRepository.deleteById(id);
-		return ResponseEntity.noContent().build();
-	}
-	
-	@PutMapping("/id/{id}")
-	private ResponseEntity<?> update(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
-		try {
-			ClienteDTO oldProduct = clienteService.update(id, clienteDTO);
-			return ResponseEntity.ok(oldProduct);
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
-	
-	@GetMapping
-	private ResponseEntity<?> getAll(@RequestParam("nome") String nome, Pageable pageable){
-		ClientListDTO response = clienteService.findAll(nome, pageable);
-		return response.getClientes().getSize() > 0 ? ResponseEntity.ok(response) : ResponseEntity.noContent().build();
-	}
-	
+  @Autowired
+  private ClienteService clienteService;
+
+  @Autowired
+  private ClienteRepository clienteRepository;
+
+  @PostMapping
+  private ResponseEntity<?> save(@RequestBody ClienteDTO clienteDTO) {
+    clienteService.save(clienteDTO);
+    return ResponseEntity.status(HttpStatus.CREATED).body(clienteDTO);
+  }
+
+  @GetMapping("/id/{id}")
+  private ResponseEntity<?> getById(@PathVariable Long id) {
+    var clienteDTO = clienteService.findBy(id);
+    return Objects.nonNull(clienteDTO) ? ResponseEntity.status(HttpStatus.OK).body(clienteDTO)
+        : ResponseEntity.notFound().build();
+  }
+
+  @DeleteMapping("/id/{id}")
+  private ResponseEntity<?> deleteById(@PathVariable Long id) {
+    clienteRepository.deleteById(id);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping("/id/{id}")
+  private ResponseEntity<?> update(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+    try {
+      return ResponseEntity.ok(clienteService.update(id, clienteDTO));
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @GetMapping
+  private ResponseEntity<?> getAll(@RequestParam("nome") String nome, Pageable pageable) {
+    ClientListDTO response = clienteService.findAll(nome, pageable);
+    return response.getClientes().getSize() > 0 ? ResponseEntity.ok(response)
+        : ResponseEntity.noContent().build();
+  }
+
 }
