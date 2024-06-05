@@ -39,7 +39,7 @@ public class ServicoResource {
 	
 	@GetMapping("/id/{id}")
 	private ResponseEntity<?> getById(@PathVariable Long id){
-		ServicoDTO servicoDTO = servicoService.findBy(id);
+		var servicoDTO = servicoService.findBy(id);
 		return Objects.nonNull(servicoDTO) ? ResponseEntity.status(HttpStatus.OK).body(servicoDTO) : ResponseEntity.notFound().build();
 	}
 	
@@ -52,7 +52,7 @@ public class ServicoResource {
 	@PutMapping("/id/{id}")
 	private ResponseEntity<?> update(@PathVariable Long id, @RequestBody ServicoDTO servicoDTO) {
 		try {
-			ServicoDTO oldProduct = servicoService.update(id, servicoDTO);
+			var oldProduct = servicoService.update(id, servicoDTO);
 			return ResponseEntity.ok(oldProduct);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
@@ -61,7 +61,7 @@ public class ServicoResource {
 	
 	@GetMapping
 	private ResponseEntity<?> getAll(@RequestParam("nome") String nome, Pageable pageable){
-		ServicoListDTO response = servicoService.findAll(nome, pageable);
+		var response = servicoService.findAll(nome, pageable);
 		return response.getServicos().getSize() > 0 ? ResponseEntity.ok(response) : ResponseEntity.noContent().build();
 	}
 	
