@@ -16,33 +16,32 @@ import br.com.venturus.api.repository.ContratoRepository;
 @Service
 public class ContratoService {
 
-	@Autowired
-	private ContratoRepository contratoRepository;
-	
-	@Autowired
-	private ModelMapper modelMapper;
-	
-	public void save(ContratoDTO contratoDTO) {
-		Contrato contrato = modelMapper.map(contratoDTO, Contrato.class);
-		contratoRepository.save(contrato);
-		contratoDTO.setId(contrato.getId());
-	}
+  @Autowired
+  private ContratoRepository contratoRepository;
 
-	public ContratoDTO findBy(Long id) {
-		Optional<Contrato> optional = contratoRepository.findById(id);
-		return optional.isPresent() ? modelMapper.map(optional.get(), ContratoDTO.class) : null;
-	}
+  @Autowired
+  private ModelMapper modelMapper;
 
-	public ContratoDTO update(Long id, ContratoDTO contratoDTO) {
-		Contrato old = contratoRepository.findById(id).get();
-		BeanUtils.copyProperties(contratoDTO, old, "id");
-		contratoRepository.save(old);
-		return modelMapper.map(old, ContratoDTO.class);
-	}
+  public void save(ContratoDTO contratoDTO) {
+    var contrato = modelMapper.map(contratoDTO, Contrato.class);
+    contratoRepository.save(contrato);
+    contratoDTO.setId(contrato.getId());
+  }
 
-	public ContratoListDTO findAll(String cnpj, Pageable pageable) {
-		ContratoListDTO result = ContratoListDTO.builder().contratos(contratoRepository.findAll(cnpj, pageable)).build();
-		return result;
-	}
-	
+  public ContratoDTO findBy(Long id) {
+    Optional<Contrato> optional = contratoRepository.findById(id);
+    return optional.isPresent() ? modelMapper.map(optional.get(), ContratoDTO.class) : null;
+  }
+
+  public ContratoDTO update(Long id, ContratoDTO contratoDTO) {
+    var old = contratoRepository.findById(id).get();
+    BeanUtils.copyProperties(contratoDTO, old, "id");
+    contratoRepository.save(old);
+    return modelMapper.map(old, ContratoDTO.class);
+  }
+
+  public ContratoListDTO findAll(String cnpj, Pageable pageable) {
+    return ContratoListDTO.builder().contratos(contratoRepository.findAll(cnpj, pageable)).build();
+  }
+
 }

@@ -16,33 +16,33 @@ import br.com.venturus.api.repository.ServicoRepository;
 @Service
 public class ServicoService {
 
-	@Autowired
-	private ServicoRepository servicoRepository;
-	
-	@Autowired
-	private ModelMapper modelMapper;
-	
-	public void save(ServicoDTO servicoDTO) {
-		Servico servico = modelMapper.map(servicoDTO, Servico.class);
-		servicoRepository.save(servico);
-		servicoDTO.setId(servico.getId());
-	}
+  @Autowired
+  private ServicoRepository servicoRepository;
 
-	public ServicoDTO findBy(Long id) {
-		Optional<Servico> optional = servicoRepository.findById(id);
-		return optional.isPresent() ? modelMapper.map(optional.get(), ServicoDTO.class) : null;
-	}
+  @Autowired
+  private ModelMapper modelMapper;
 
-	public ServicoDTO update(Long id, ServicoDTO servicoDTO) {
-		Servico old = servicoRepository.findById(id).get();
-		BeanUtils.copyProperties(servicoDTO, old, "id");
-		servicoRepository.save(old);
-		return modelMapper.map(old, ServicoDTO.class);
-	}
+  public void save(ServicoDTO servicoDTO) {
+    var servico = modelMapper.map(servicoDTO, Servico.class);
+    servicoRepository.save(servico);
+    servicoDTO.setId(servico.getId());
+  }
 
-	public ServicoListDTO findAll(String nome, Pageable pageable) {
-		ServicoListDTO result = ServicoListDTO.builder().servicos(servicoRepository.findAllByDescricaoContainingIgnoreCase(nome, pageable)).build();
-		return result;
-	}
-	
+  public ServicoDTO findBy(Long id) {
+    Optional<Servico> optional = servicoRepository.findById(id);
+    return optional.isPresent() ? modelMapper.map(optional.get(), ServicoDTO.class) : null;
+  }
+
+  public ServicoDTO update(Long id, ServicoDTO servicoDTO) {
+    var old = servicoRepository.findById(id).get();
+    BeanUtils.copyProperties(servicoDTO, old, "id");
+    servicoRepository.save(old);
+    return modelMapper.map(old, ServicoDTO.class);
+  }
+
+  public ServicoListDTO findAll(String nome, Pageable pageable) {
+    return ServicoListDTO.builder()
+        .servicos(servicoRepository.findAllByDescricaoContainingIgnoreCase(nome, pageable)).build();
+  }
+
 }

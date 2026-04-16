@@ -16,33 +16,33 @@ import br.com.venturus.api.repository.ClienteRepository;
 @Service
 public class ClienteService {
 
-	@Autowired
-	private ClienteRepository clienteRepository;
-	
-	@Autowired
-	private ModelMapper modelMapper;
-	
-	public void save(ClienteDTO clienteDTO) {
-		Cliente empresa = modelMapper.map(clienteDTO, Cliente.class);
-		clienteRepository.save(empresa);
-		clienteDTO.setId(empresa.getId());
-	}
+  @Autowired
+  private ClienteRepository clienteRepository;
 
-	public ClienteDTO findBy(Long id) {
-		Optional<Cliente> optional = clienteRepository.findById(id);
-		return optional.isPresent() ? modelMapper.map(optional.get(), ClienteDTO.class) : null;
-	}
+  @Autowired
+  private ModelMapper modelMapper;
 
-	public ClienteDTO update(Long id, ClienteDTO clienteDTO) {
-		Cliente old = clienteRepository.findById(id).get();
-		BeanUtils.copyProperties(clienteDTO, old, "id");
-		clienteRepository.save(old);
-		return modelMapper.map(old, ClienteDTO.class);
-	}
+  public void save(ClienteDTO clienteDTO) {
+    var empresa = modelMapper.map(clienteDTO, Cliente.class);
+    clienteRepository.save(empresa);
+    clienteDTO.setId(empresa.getId());
+  }
 
-	public ClientListDTO findAll(String nome, Pageable pageable) {
-		ClientListDTO result = ClientListDTO.builder().clientes(clienteRepository.findAllByNomeContainingIgnoreCase(nome, pageable)).build();
-		return result;
-	}
-	
+  public ClienteDTO findBy(Long id) {
+    Optional<Cliente> optional = clienteRepository.findById(id);
+    return optional.isPresent() ? modelMapper.map(optional.get(), ClienteDTO.class) : null;
+  }
+
+  public ClienteDTO update(Long id, ClienteDTO clienteDTO) {
+    var old = clienteRepository.findById(id).get();
+    BeanUtils.copyProperties(clienteDTO, old, "id");
+    clienteRepository.save(old);
+    return modelMapper.map(old, ClienteDTO.class);
+  }
+
+  public ClientListDTO findAll(String nome, Pageable pageable) {
+    return ClientListDTO.builder()
+        .clientes(clienteRepository.findAllByNomeContainingIgnoreCase(nome, pageable)).build();
+  }
+
 }
