@@ -14,6 +14,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
@@ -32,7 +33,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
+			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		String message = messageSource.getMessage("campo.invalido", null, LocaleContextHolder.getLocale());
 		String cause = ex.getCause() != null ? ex.getCause().toString() : ex.toString();
 		List<Error> errors = Arrays.asList(new Error(message, cause));
@@ -41,7 +42,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
+			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		List<Error> erros = getErrorList(ex.getBindingResult());
 		return handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
 	}
